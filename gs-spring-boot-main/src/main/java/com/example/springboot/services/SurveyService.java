@@ -97,8 +97,8 @@ public class SurveyService {
         Survey changeLink = surveyRepository.findById(survey.getId()).orElseThrow(
                 () -> new IllegalStateException("x"));
 
-        // changeLink.setLink("https://employee-pulse.azurewebsites.net/survey?link=" + changeLink.getId());
-        changeLink.setLink("https://localhost:8080/survey?link=" + changeLink.getId());
+        changeLink.setLink("https://employee-pulse.azurewebsites.net/survey?link=" + changeLink.getId());
+        // changeLink.setLink("https://localhost:8080/survey?link=" + changeLink.getId());
         surveyRepository.save(changeLink);
 
         model.addAttribute("link", survey.getLink());
@@ -108,8 +108,8 @@ public class SurveyService {
 
     public String getSurvey(String id, Model model) {
 
-        // String link = "https://employee-pulse.azurewebsites.net/survey?link=" + id;
-        String link = "https://localhost:8080/survey?link=" + id;
+        String link = "https://employee-pulse.azurewebsites.net/survey?link=" + id;
+        // String link = "https://localhost:8080/survey?link=" + id;
         Survey survey = surveyRepository.findById(Long.valueOf(id)).orElseThrow(() -> new IllegalStateException("x"));
         boolean valid = checkIfValid(survey.getStartedAt(), survey.getExpiredAt());
         if (!valid){
