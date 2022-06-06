@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
-    <!-- <link rel="icon" type="image/x-icon" href="../../static/IMAGES/favicon.png" /> -->
+    <link rel="icon" type="image/x-icon" href="css/IMAGES/favicon.png" />
 </head>
 
 <body>
@@ -19,8 +19,12 @@
     <div class="survey col-sm-12 col-md-12 col-lg-12 col-xl-10">
 
         <div class="question row">
-            <div class="col-12" th:text="${question}">
-                <!-- Tutaj pobrać pytanie z bazy -->
+
+            <div class="col-12">
+                <img class="logo mb-3" src="css/IMAGES/logo.png">
+                <div class="survey-question" th:text="${question}">
+                    Jak się dziś czujesz?
+                </div>
             </div>
         </div>
         <div class="answers row row-cols-1 row-cols-md-2">
@@ -31,8 +35,8 @@
                         <button class="answer-btn" th:action="@{/vote?id=${id}?option=1}">
                             <!-- Tutaj pobrać obraz z bazy danych (mechanika do omówienia)-->
 
-                            <div class="card-header card-header-answer-1" th:text="${emoji1}">
-                                😃
+                            <div class="card-header card-header-answer-1">
+                                <p th:text="${emoji1}"></p>
                             </div>
                             <div class="card-body card-body-answer-1">
                                 <!-- Tutaj pobrać odpowiedź z bazy -->
@@ -48,8 +52,8 @@
                     <div class="card answer">
                         <button class="answer-btn" th:action="@{/vote?id=${id}?option=2}">
                             <!-- Tutaj pobrać obraz z bazy danych (mechanika do omówienia)-->
-                            <div class="card-header card-header-answer-2" th:text="${emoji2}">
-                                😐
+                            <div class="card-header card-header-answer-2">
+                                <p th:text="${emoji2}"></p>
                             </div>
                             <div class="card-body card-body-answer-2">
                                 <!-- Tutaj pobrać odpowiedź z bazy -->
@@ -63,8 +67,8 @@
                 <div class="col mb-4 d-flex align-items-stretch">
                     <div class="card answer">
                         <button class="answer-btn">
-                            <div class="card-header card-header-answer-3" th:text="${emoji3}">
-                                😢
+                            <div class="card-header card-header-answer-3">
+                                <p th:text="${emoji3}"></p>
                             </div>
                             <div class="card-body card-body-answer-3">
                                 <!-- Tutaj pobrać odpowiedź z bazy -->
@@ -79,8 +83,8 @@
                     <div class="card answer">
                         <button class="answer-btn" th:href="@{/vote?id=${id}?option=4}">
                             <!-- Tutaj pobrać obraz z bazy danych (mechanika do omówienia)-->
-                            <div class="card-header card-header-answer-4" th:text="${emoji4}">
-                                🤬
+                            <div class="card-header card-header-answer-4">
+                                <p th:text="${emoji4}"></p>
                             </div>
                             <div class="card-body card-body-answer-4">
                                 <!-- Tutaj pobrać odpowiedź z bazy -->

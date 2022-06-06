@@ -55,6 +55,14 @@ body {
     margin-right: 20px;
 }
 
+.logout-icon {
+    color: #727272;
+}
+
+.logout-icon:hover {
+    color: #EEE;
+}
+
 
 /* responsiveness */
 
@@ -99,6 +107,11 @@ body {
     align-content: stretch;
     justify-content: space-evenly;
     align-items: center;
+}
+
+.logo {
+    width: 50%;
+    margin-top: 140px;
 }
 
 input[type=text] {
@@ -165,7 +178,8 @@ input[type=date] {
 .btn {
     min-width: auto;
     width: 100%;
-    height: 60px;
+    height: auto;
+    min-height: 60px;
     background-color: #56BAED;
     border-color: #56BAED;
     border-radius: 10px;
@@ -231,13 +245,23 @@ input[type=date] {
     width: auto;
 }
 
+.row-logo {
+    display: flex;
+    justify-content: center;
+}
+
 
 /* generate_survey */
 
 .row-filter {
     margin-top: 40px;
+    margin-bottom: 40px;
     height: auto;
     width: 100%;
+}
+
+.link-row {
+    text-align: center;
 }
 
 
@@ -325,6 +349,15 @@ input[type=date] {
 }
 
 
+/* style for picker */
+
+emoji-picker {
+    --background: #EEE;
+    --border-color: #EEE;
+    ;
+}
+
+
 /* ----------------------------- */
 
 
@@ -345,7 +378,6 @@ input[type=date] {
 }
 
 .row-raports {
-    margin-top: 40px;
     height: auto;
     max-width: 800px;
     width: 100%;
@@ -355,8 +387,13 @@ input[type=date] {
     text-align: left;
 }
 
+.survey-header {
+    width: 100%;
+}
+
 .survey-date {
-    text-align: right;
+    display: flex;
+    align-items: center;
 }
 
 .accordion-button:after {
@@ -399,6 +436,15 @@ input[type=date] {
 .last-answer {
     border-bottom: none;
     font-weight: bold;
+}
+
+.link-logo {
+    margin-bottom: 40px;
+}
+
+.link-row {
+    display: flex;
+    justify-content: center;
 }
 
 .link-field-survey {
@@ -500,6 +546,9 @@ input[type=date] {
     .form-floating-title {
         margin-bottom: 1rem!important;
     }
+    .btn-copy-survey {
+        margin-right: 10px;
+    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -519,6 +568,19 @@ input[type=date] {
     }
     .form-control-end {
         margin-bottom: 1rem!important;
+    }
+    .logo {
+        width: 80%;
+        margin-top: 270px;
+    }
+    .btn-copy-survey {
+        margin-right: 50px;
+    }
+}
+
+@media only screen and (max-width: 540px) {
+    .btn-copy-survey {
+        margin-right: 55px;
     }
 }
 

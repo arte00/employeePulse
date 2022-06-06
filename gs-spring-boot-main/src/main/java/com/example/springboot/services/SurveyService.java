@@ -1,9 +1,6 @@
 package com.example.springboot.services;
 
-import com.example.springboot.model.FilterForm;
-import com.example.springboot.model.Survey;
-import com.example.springboot.model.SurveyForm;
-import com.example.springboot.model.User;
+import com.example.springboot.model.*;
 import com.example.springboot.repository.LoginRepository;
 import com.example.springboot.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
@@ -55,12 +52,13 @@ public class SurveyService {
         redirectAttrs.addFlashAttribute("answer2", surveyForm.getAnswer2());
         redirectAttrs.addFlashAttribute("answer3", surveyForm.getAnswer3());
         redirectAttrs.addFlashAttribute("answer4", surveyForm.getAnswer4());
-        redirectAttrs.addFlashAttribute("emoji1", "emoji1");
+        redirectAttrs.addFlashAttribute("emoji1", surveyForm.getEmoji1());
         redirectAttrs.addFlashAttribute("emoji2", surveyForm.getEmoji2());
         redirectAttrs.addFlashAttribute("emoji3", surveyForm.getEmoji3());
         redirectAttrs.addFlashAttribute("emoji4", surveyForm.getEmoji4());
         redirectAttrs.addFlashAttribute("startedAt", surveyForm.getStartedAt());
         redirectAttrs.addFlashAttribute("expiresAt", surveyForm.getExpiredAt());
+
         return "redirect:/link";
     }
 
@@ -88,6 +86,10 @@ public class SurveyService {
 
         User user = loginRepository.findByEmail(email);
 
+        if (user == null) {
+            return "redirect:/";
+        }
+
         model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
 
         Survey survey = new Survey(title, question, answer1, answer2, answer3, answer4, emoji1,  emoji2, emoji3, emoji4, startedAt, expiresAt, user);
@@ -97,8 +99,14 @@ public class SurveyService {
         Survey changeLink = surveyRepository.findById(survey.getId()).orElseThrow(
                 () -> new IllegalStateException("x"));
 
-        changeLink.setLink("https://employee-pulse.azurewebsites.net/survey?link=" + changeLink.getId());
-        // changeLink.setLink("https://localhost:8080/survey?link=" + changeLink.getId());
+        // changeLink.setLink("https://employee-pulse.azurewebsites.net/survey?link=" + changeLink.getId());
+        String originalInput = String.valueOf(survey.getId());
+
+
+        String encodedString = EncryptionUtil.encode(originalInput);
+
+        //changeLink.setLink("https://localhost:8080/survey?link=" + encodedString);
+        changeLink.setLink("https://employee-pulse.azurewebsites.net/survey?link=" + encodedString);
         surveyRepository.save(changeLink);
 
         model.addAttribute("link", survey.getLink());
@@ -108,12 +116,16 @@ public class SurveyService {
 
     public String getSurvey(String id, Model model) {
 
-        String link = "https://employee-pulse.azurewebsites.net/survey?link=" + id;
-        // String link = "https://localhost:8080/survey?link=" + id;
-        Survey survey = surveyRepository.findById(Long.valueOf(id)).orElseThrow(() -> new IllegalStateException("x"));
+
+
+        String decodedString = EncryptionUtil.decode(id);
+
+        String link = "https://employee-pulse.azurewebsites.net/survey?link=" + decodedString;
+        //String link = "https://localhost:8080/survey?link=" + decodedString;
+        Survey survey = surveyRepository.findById(Long.valueOf(decodedString)).orElseThrow(() -> new IllegalStateException("x"));
         boolean valid = checkIfValid(survey.getStartedAt(), survey.getExpiredAt());
         if (!valid){
-            return "app:/unavailable";
+            return "app/unavailable";
         }
         model.addAttribute("question", survey.getQuestion());
         model.addAttribute("answer1", survey.getAnswer1());
@@ -127,7 +139,7 @@ public class SurveyService {
         model.addAttribute("answer2", survey.getAnswer2());
         model.addAttribute("answer3", survey.getAnswer3());
         model.addAttribute("answer4", survey.getAnswer4());
-        model.addAttribute("id", id);
+        model.addAttribute("id", decodedString);
         return "app/survey";
     }
 
@@ -156,6 +168,11 @@ public class SurveyService {
 
         start = start.minus(2, ChronoUnit.HOURS);
         stop = stop.minus(2, ChronoUnit.HOURS);
+
+
+        System.out.println("now" + now);
+        System.out.println("start" + start);
+        System.out.println("stop" + stop);
 
         if (now.isAfter(stop)){
             return false;

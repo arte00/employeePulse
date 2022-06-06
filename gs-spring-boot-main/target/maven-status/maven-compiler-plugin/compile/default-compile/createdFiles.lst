@@ -5,6 +5,7 @@ com\example\springboot\model\FilterForm.class
 com\example\springboot\Application.class
 com\example\springboot\model\UserData.class
 com\example\springboot\controllers\SurveyController.class
+com\example\springboot\model\EncryptionUtil.class
 com\example\springboot\model\Survey.class
 com\example\springboot\services\LoginService.class
 com\example\springboot\model\LoginForm.class
