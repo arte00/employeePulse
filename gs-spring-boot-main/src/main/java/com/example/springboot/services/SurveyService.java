@@ -105,7 +105,7 @@ public class SurveyService {
 
         String encodedString = EncryptionUtil.encode(originalInput);
 
-        //changeLink.setLink("https://localhost:8080/survey?link=" + encodedString);
+        // changeLink.setLink("https://localhost:8080/survey?link=" + encodedString);
         changeLink.setLink("https://employee-pulse.azurewebsites.net/survey?link=" + encodedString);
         surveyRepository.save(changeLink);
 
@@ -121,8 +121,9 @@ public class SurveyService {
         String decodedString = EncryptionUtil.decode(id);
 
         String link = "https://employee-pulse.azurewebsites.net/survey?link=" + decodedString;
-        //String link = "https://localhost:8080/survey?link=" + decodedString;
+        // String link = "https://localhost:8080/survey?link=" + decodedString;
         Survey survey = surveyRepository.findById(Long.valueOf(decodedString)).orElseThrow(() -> new IllegalStateException("x"));
+
         boolean valid = checkIfValid(survey.getStartedAt(), survey.getExpiredAt());
         if (!valid){
             return "app/unavailable";
@@ -145,8 +146,8 @@ public class SurveyService {
 
     private boolean checkIfValid(String startedAt, String expiredAt) {
 
-        startedAt = startedAt.replace(".", "-");
-        startedAt = startedAt + "T11:58";
+//        startedAt = startedAt.replace(".", "-");
+//        startedAt = startedAt + "T11:58";
 
         System.out.println(startedAt);
         System.out.println(expiredAt);
@@ -273,17 +274,18 @@ public class SurveyService {
                 System.out.println("4");
             }
 
+            String ending = "";
 
-            for (Survey survey : surveyList){
-                String date = survey.getStartedAt();
+//            for (Survey survey : surveyList){
+//                String date = survey.getStartedAt();
 //                String year = date.substring(0, 4);
 //                String month = date.substring(5, 7);
 //                String day = date.substring(8, 10);
 //                survey.setStartedAt(day + "." + month + "." + year + "r");
-                date = date.substring(0, 10);
-                date = date.replace("-", ".");
-                survey.setStartedAt(date);
-            }
+//                date = date.substring(0, 10);
+//                date = date.replace("-", ".");
+//                survey.setStartedAt(date);
+//            }
 
             System.out.println("xD " + email);
             Collections.reverse(surveyList);
